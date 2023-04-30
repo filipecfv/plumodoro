@@ -5,7 +5,7 @@ import pandas as pd
 import plotext as plt
 
 from datetime import datetime, timedelta
-from history import path, create_history_file() 
+from history import path, create_history_file 
 
 
 def read_data(within_days):
