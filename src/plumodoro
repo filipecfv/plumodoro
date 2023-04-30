@@ -1,0 +1,72 @@
+#!/usr/bin/env python3
+
+import clock
+import history
+import terminal
+import argparse
+
+from alarm import alarm
+
+def pomodoro(work_time, short_rest, long_rest):
+    try:
+        history.check_for_history_file()
+        cycle(work_time, short_rest, long_rest)
+    except (KeyboardInterrupt):
+        terminal.clear()
+        print("Pomodoro interrompido!")
+   
+def cycle(work_time, short_rest, long_rest):
+    for session in range(1, 80):
+        terminal.clear()
+        for i in range(1, session+1):
+            print("== Session {} ==========".format(i))
+        pomo = 1
+        work(work_time, short_rest, long_rest, pomo)
+
+def work(work_time, short_rest, long_rest, pomo): 
+    print("Pomodoro", pomo, "/ 4")
+    clock.clock(work_time)
+    history.history(work_time)
+    rest(work_time, short_rest, long_rest, pomo)
+
+def rest(work_time, short_rest, long_rest, pomo):
+    if pomo != 4:
+        short_break(work_time, short_rest, long_rest, pomo)
+    else: 
+        long_break(work_time, short_rest, long_rest, pomo)
+
+def short_break(work_time, short_rest, long_rest, pomo):
+    print("End of pomodoro", pomo)
+    print("Time to rest")
+    alarm()
+    clock.clock(short_rest)
+    next_pomo(work_time, short_rest, long_rest, pomo)
+
+def next_pomo(work_time,short_rest, long_rest, pomo):
+    print("End of resting! \n")
+    alarm()
+    pomo = pomo + 1
+    work(work_time, short_rest, long_rest, pomo) 
+
+def long_break(work_time, short_rest, long_rest, pomo):
+    print("Long rest!")
+    alarm()
+    clock.clock(long_rest)
+    print("End of resting!")
+    alarm()
+    terminal.clear()
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(prog = 'Plumodoro',
+                                description='A simple and suckless pomodoro')
+    parser.add_argument('-w', '--work-time', metavar = '',
+                            type=int, default=25, 
+                            help='Duration of work periods, in minutes (default: 25)')
+    parser.add_argument('-s', '--short-rest', metavar = '',
+                            type=int, default=5, 
+                            help='Duration of short rests, in minutes (default: 5)')
+    parser.add_argument('-l', '--long-rest', metavar = '', 
+                        type=int, default=15, 
+                        help='Duration of long rests, in minutes (default: 15)')
+    args = parser.parse_args()
+    pomodoro(args.work_time, args.short_rest, args.long_rest)
