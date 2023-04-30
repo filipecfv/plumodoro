@@ -1,0 +1,88 @@
+#!/usr/bin/env python3
+
+import argparse
+import pandas as pd
+import plotext as plt
+
+from datetime import datetime, timedelta
+from history import path, create_history_file() 
+
+
+def read_data(within_days):
+    year = datetime.now().year
+    history = pd.read_csv(path + '/plumodoro_history_{}.csv'.format(year))
+    history['Date'] = pd.to_datetime(history['Date'])
+    today =  datetime.today()
+    within = today - timedelta(days = within_days)
+    data = history[(history['Date'] >= within) & (history['Date'] <= today)]
+    execute_command(data)
+
+def execute_command(data):
+    if args.subcommand == 'table':
+        print_table(data)
+    elif args.subcommand == 'plot':
+        plot_graph(data)
+    elif args.subcommand == 'clear':
+        confirm()
+
+def confirm():
+    answer = input('This will delete all your plumodoro history! \
+            \nContinue? [y/n]')
+    if answer == 'y': 
+        clear_history()
+    elif answer == 'n': 
+        print('')
+    else:
+        confirm()
+
+def clear_history():
+    print("clearing...")
+    history.create_history_file()
+
+def print_table(table):
+    print(table)
+
+def plot_graph(table):
+    extract_columns_into_lists(table)
+
+def extract_columns_into_lists(data):
+    date = data['Date'].to_list()
+    pomodoros = data['Pomodoros'].to_list()
+    work_hours = data['Work Hours'].to_list()
+    plot_bar(date, pomodoros, work_hours)
+
+def plot_bar(date, pomodoros, work_hours):
+    plt.simple_multiple_bar(date, [pomodoros, work_hours])
+    plt.show()
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(prog='Plumodoro-stats',  
+            description='An addon to display statistics from plumodoro',
+            usage='%(prog)s [-h] [command]')
+    # creating subcommands
+    subparsers = parser.add_subparsers(title='commands', metavar = '',
+            dest = 'subcommand')
+    # 1. table
+    parser_table = subparsers.add_parser('table', 
+            help='Print a table with statistics')
+    parser_table.add_argument('-w', '--within', metavar = '', 
+            type = int, default = 7, 
+            help = 'how many days within to print the table')
+    # 2.plot
+    parser_plot = subparsers.add_parser('plot', 
+            help='Plot a graph with statistics')
+    parser_plot.add_argument('-w', '--within', metavar = '', 
+            type = int, default = 7, 
+            help = 'how many days within to plot the statistics')
+    # 3. clear history
+    parser_clear = subparsers.add_parser('clear', 
+            help = 'Clear history file')
+    # setting commands name
+    parser_table.set_defaults(func=print_table)
+    parser_plot.set_defaults(func=plot_graph)
+
+    try:
+        args = parser.parse_args()
+        read_data(args.within)
+    except AttributeError:
+        parser.print_help()
