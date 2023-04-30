@@ -1,5 +1,12 @@
-from playsound import playsound
+import sounddevice as sd
+import soundfile as sf
+import os
+
+path = os.path.dirname( __file__ )
 
 def alarm():
-    playsound('sounds/alarm.mid')
+    data, samplerate = sf.read(path + '/sounds/alarm.ogg')
+    sd.play(data, samplerate, blocksize=8192)
+    sd.wait()
 
+alarm()
