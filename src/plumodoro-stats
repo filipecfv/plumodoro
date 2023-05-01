@@ -57,7 +57,7 @@ def plot_bar(date, pomodoros, work_hours):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='Plumodoro-stats',  
-            description='An addon to display statistics from plumodoro',
+            description='Display statistics from plumodoro',
             usage='%(prog)s [-h] [command]')
     # creating subcommands
     subparsers = parser.add_subparsers(title='commands', metavar = '',
