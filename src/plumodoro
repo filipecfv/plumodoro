@@ -58,7 +58,7 @@ def long_break(work_time, short_rest, long_rest, pomo):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog = 'Plumodoro',
-                                description='A simple and suckless pomodoro')
+                                description='A simple command line pomodoro')
     parser.add_argument('-w', '--work-time', metavar = '',
                             type=int, default=25, 
                             help='Duration of work periods, in minutes (default: 25)')
