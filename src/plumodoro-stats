@@ -40,7 +40,7 @@ def clear_history():
     history.create_history_file()
 
 def print_table(table):
-    print(table)
+    print(table.to_string(index = False))
 
 def plot_graph(table):
     extract_columns_into_lists(table)
