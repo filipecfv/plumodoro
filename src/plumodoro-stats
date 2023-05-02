@@ -41,23 +41,24 @@ def clear_history():
     history.create_history_file()
 
 def print_table(table, within_days):
-    print('Plumodoro table within the last {} days:'.format(within_days))
+    print('Plumodoro table from within the last {} days:'.format(within_days))
     print(table.to_string(index = False))
 
-def plot_graph(table):
-    extract_columns_into_lists(table)
+def plot_graph(table, within):
+    extract_columns_into_lists(table, within)
 
-def extract_columns_into_lists(data):
+def extract_columns_into_lists(data, within):
     date = data['Date'].to_list()
     date = [t.strftime('%Y-%m-%d') for t in date]
     pomodoros = data['Pomodoros'].to_list()
     work_hours = data['Work Hours'].to_list()
-    plot_bar(date, pomodoros, work_hours)
+    plot_bar(date, pomodoros, work_hours, within)
 
-def plot_bar(date, pomodoros, work_hours):
+def plot_bar(date, pomodoros, work_hours, within):
     plt.simple_multiple_bar(date, [pomodoros, work_hours],
-            title = 'Plumodoro histogram',
-            labels = ['pomodoros', 'work hours']
+        title = 'Plumodoro histogram \
+from within the last {} days'.format(within),
+        labels = ['pomodoros', 'work hours']
     )
     plt.show()
 
