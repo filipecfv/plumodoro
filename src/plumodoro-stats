@@ -11,6 +11,7 @@ from history import path, create_history_file
 def read_data(within_days):
     year = datetime.now().year
     history = pd.read_csv(path + '/plumodoro_history_{}.csv'.format(year))
+    history['Pomodoros'] = history['Pomodoros'].astype(int)
     history['Date'] = pd.to_datetime(history['Date'])
     today =  datetime.today()
     within = today - timedelta(days = within_days)
@@ -47,12 +48,16 @@ def plot_graph(table):
 
 def extract_columns_into_lists(data):
     date = data['Date'].to_list()
+    date = [t.strftime('%Y-%m-%d') for t in date]
     pomodoros = data['Pomodoros'].to_list()
     work_hours = data['Work Hours'].to_list()
     plot_bar(date, pomodoros, work_hours)
 
 def plot_bar(date, pomodoros, work_hours):
-    plt.simple_multiple_bar(date, [pomodoros, work_hours])
+    plt.simple_multiple_bar(date, [pomodoros, work_hours],
+            title = 'Plumodoro histogram',
+            labels = ['pomodoros', 'work hours']
+    )
     plt.show()
 
 if __name__ == '__main__':
