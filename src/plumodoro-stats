@@ -11,7 +11,16 @@ from history import path, create_history_file
 def read_data(within_days):
     year = datetime.now().year
     history = pd.read_csv(path + '/plumodoro_history_{}.csv'.format(year))
+    transform_data(history, within_days)
+
+def format_hours(hours):
+    hours_int = int(hours)
+    minutes = round((hours - hours_int) * 60)
+    return f"{hours_int:02d}:{minutes:02d}"
+
+def transform_data(history, within_days):
     history['Pomodoros'] = history['Pomodoros'].astype(int)
+    history['Work Hours'] = history['Work Hours'].round(2).apply(format_hours)
     history['Date'] = pd.to_datetime(history['Date'])
     today =  datetime.today()
     within = today - timedelta(days = within_days)
@@ -51,7 +60,8 @@ def extract_columns_into_lists(data, within):
     date = data['Date'].to_list()
     date = [t.strftime('%Y-%m-%d') for t in date]
     pomodoros = data['Pomodoros'].to_list()
-    work_hours = data['Work Hours'].to_list()
+    work_hours = ((data['Pomodoros']*25)/60).to_list()
+    work_hours = [round(x, 2) for x in work_hours]
     plot_bar(date, pomodoros, work_hours, within)
 
 def plot_bar(date, pomodoros, work_hours, within):
