@@ -61,22 +61,26 @@ def plot_bar(date, pomodoros, work_hours):
     plt.show()
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(prog='Plumodoro-stats',  
+    parser = argparse.ArgumentParser(
+            prog='Plumodoro-stats',  
             description='Display statistics from plumodoro',
-            usage='%(prog)s [-h] [command]')
+            )
     # creating subcommands
-    subparsers = parser.add_subparsers(title='commands', metavar = '',
-            dest = 'subcommand')
+    subparsers = parser.add_subparsers(
+            dest = 'subcommand', 
+            metavar = '<subcommand>')
     # 1. table
     parser_table = subparsers.add_parser('table', 
             help='Print a table with statistics')
-    parser_table.add_argument('-w', '--within', metavar = '', 
+    parser_table.add_argument('-w', '--within', 
+            metavar = '\b',
             type = int, default = 7, 
             help = 'how many days within to print the table')
     # 2.plot
     parser_plot = subparsers.add_parser('plot', 
             help='Plot a graph with statistics')
-    parser_plot.add_argument('-w', '--within', metavar = '', 
+    parser_plot.add_argument('-w', '--within', 
+            metavar = '\b',
             type = int, default = 7, 
             help = 'how many days within to plot the statistics')
     # 3. clear history
