@@ -16,13 +16,13 @@ def read_data(within_days):
     today =  datetime.today()
     within = today - timedelta(days = within_days)
     data = history[(history['Date'] >= within) & (history['Date'] <= today)]
-    execute_command(data)
+    execute_command(data, within_days)
 
-def execute_command(data):
+def execute_command(data, within_days):
     if args.subcommand == 'table':
-        print_table(data)
+        print_table(data, within_days)
     elif args.subcommand == 'plot':
-        plot_graph(data)
+        plot_graph(data, within_days)
     elif args.subcommand == 'clear':
         confirm()
 
@@ -40,7 +40,8 @@ def clear_history():
     print("clearing...")
     history.create_history_file()
 
-def print_table(table):
+def print_table(table, within_days):
+    print('Plumodoro table within the last {} days:'.format(within_days))
     print(table.to_string(index = False))
 
 def plot_graph(table):
