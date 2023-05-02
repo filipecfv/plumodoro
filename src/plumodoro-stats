@@ -32,8 +32,6 @@ def execute_command(data, within_days):
         print_table(data, within_days)
     elif args.subcommand == 'plot':
         plot_graph(data, within_days)
-    elif args.subcommand == 'clear':
-        confirm()
 
 def confirm():
     answer = input('This will delete all your plumodoro history! \
@@ -43,7 +41,7 @@ def confirm():
     elif answer == 'n': 
         print('')
     else:
-        confirm()
+       print('confirm') 
 
 def clear_history():
     print("clearing...")
@@ -98,12 +96,13 @@ if __name__ == '__main__':
     # 3. clear history
     parser_clear = subparsers.add_parser('clear', 
             help = 'Clear history file')
-    # setting commands name
-    parser_table.set_defaults(func=print_table)
-    parser_plot.set_defaults(func=plot_graph)
 
-    try:
-        args = parser.parse_args()
-        read_data(args.within)
-    except AttributeError:
-        parser.print_help()
+    args = parser.parse_args()
+   
+    if args.subcommand == 'clear':
+        confirm()
+    else: 
+        try:
+            read_data(args.within)
+        except AttributeError:
+            parser.print_help()
