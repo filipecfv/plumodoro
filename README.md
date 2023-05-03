@@ -8,7 +8,7 @@ A light command line pomodoro with statistics
 - `echo export PATH=$PATH:$(pwd)/src >> ~/.bashrc`
 
 ## Basic Usage
-- Plumodoro
+### Plumodoro
 
 ```
 usage: Plumodoro [-h] [-w] [-s] [-l]
@@ -23,7 +23,7 @@ options:
 
 ```
 
-- Plumodoro-stats
+### Plumodoro-stats
 
 ```
 usage: Plumodoro-stats [-h] <subcommand> ...
@@ -41,7 +41,7 @@ options:
 
 ```
 
-- Plumodoro-stats table
+#### Plumodoro-stats table
 
 ```
 - Plumodoro-stats table
@@ -52,7 +52,7 @@ options:
   -w, --within  how many days within to print the table
 ```
 
-    - Example: 
+- Example: 
 
 ```
 $ plumodoro-stats table -w 5
@@ -66,7 +66,7 @@ Plumodoro table from within the last 5 days:
 2023-05-03          0      00:00
 ```
 
-- Plumodoro-stats plot
+#### Plumodoro-stats plot
 
 ```
 usage: Plumodoro-stats plot [-h] [-w]
@@ -76,5 +76,6 @@ options:
   -w, --within  how many days within to plot the statistics
 ```
 
-    - Example `$ plumodoro-stats plot -w 6`
+- Example `$ plumodoro-stats plot -w 6`
+
     ![](/demo/plotex_plot.png)
