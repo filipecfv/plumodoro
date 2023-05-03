@@ -44,7 +44,6 @@ options:
 #### Plumodoro-stats table
 
 ```
-- Plumodoro-stats table
 usage: plumodoro-stats table [-h] [-w]
 
 options:
