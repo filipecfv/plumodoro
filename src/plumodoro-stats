@@ -83,7 +83,7 @@ from within the last {} days'.format(within),
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-            prog='Plumodoro-stats',
+            prog='plumodoro-stats',
             description='Display statistics from plumodoro',
             )
     # creating subcommands
