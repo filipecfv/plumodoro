@@ -74,7 +74,7 @@ def extract_columns_into_lists(data, within):
 def plot_bar(date, pomodoros, work_hours, within):
     plt.simple_multiple_bar(
             date, [pomodoros, work_hours],
-            title='Plumodoro histogram \
+            title='Plumodoro statistics \
 from within the last {} days'.format(within),
             labels=['pomodoros', 'work hours']
     )
