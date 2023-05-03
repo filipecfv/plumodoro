@@ -9,6 +9,7 @@ A light command line pomodoro with statistics
 
 ## Basic Usage
 - Plumodoro
+
 ```
 usage: Plumodoro [-h] [-w] [-s] [-l]
 
@@ -21,7 +22,9 @@ options:
   -l, --long-rest   Duration of long rests, in minutes (default: 15)
 
 ```
+
 - Plumodoro-stats
+
 ```
 usage: Plumodoro-stats [-h] <subcommand> ...
 
@@ -37,7 +40,9 @@ options:
   -h, --help    show this help message and exit
 
 ```
+
 - Plumodoro-stats table
+
 ```
 - Plumodoro-stats table
 usage: Plumodoro-stats table [-h] [-w]
@@ -46,7 +51,9 @@ options:
   -h, --help        show this help message and exit
   -w, --within  how many days within to print the table
 ```
+
     - Example: 
+
 ```
 $ plumodoro-stats table -w 5
 
@@ -58,6 +65,7 @@ Plumodoro table from within the last 5 days:
 2023-05-02          4      01:36
 2023-05-03          0      00:00
 ```
+
 - Plumodoro-stats plot
 
 ```
@@ -67,5 +75,6 @@ options:
   -h, --help        show this help message and exit
   -w, --within  how many days within to plot the statistics
 ```
+
     - Example `$ plumodoro-stats plot -w 6`
     ![](/demo/plotex_plot.png)
