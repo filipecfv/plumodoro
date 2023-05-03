@@ -11,7 +11,7 @@ A light command line pomodoro with statistics
 ### Plumodoro
 
 ```
-usage: Plumodoro [-h] [-w] [-s] [-l]
+usage: plumodoro [-h] [-w] [-s] [-l]
 
 A simple command line pomodoro
 
@@ -26,7 +26,7 @@ options:
 ### Plumodoro-stats
 
 ```
-usage: Plumodoro-stats [-h] <subcommand> ...
+usage: plumodoro-stats [-h] <subcommand> ...
 
 Display statistics from plumodoro
 
@@ -45,7 +45,7 @@ options:
 
 ```
 - Plumodoro-stats table
-usage: Plumodoro-stats table [-h] [-w]
+usage: plumodoro-stats table [-h] [-w]
 
 options:
   -h, --help        show this help message and exit
@@ -69,7 +69,7 @@ Plumodoro table from within the last 5 days:
 #### Plumodoro-stats plot
 
 ```
-usage: Plumodoro-stats plot [-h] [-w]
+usage: plumodoro-stats plot [-h] [-w]
 
 options:
   -h, --help        show this help message and exit
