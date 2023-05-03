@@ -5,7 +5,7 @@ import pandas as pd
 import plotext as plt
 
 from datetime import datetime, timedelta
-from history import path, create_history_file 
+from history import path, create_history_file
 
 
 def read_data(within_days):
@@ -13,19 +13,22 @@ def read_data(within_days):
     history = pd.read_csv(path + '/plumodoro_history_{}.csv'.format(year))
     transform_data(history, within_days)
 
+
 def format_hours(hours):
     hours_int = int(hours)
     minutes = round((hours - hours_int) * 60)
     return f"{hours_int:02d}:{minutes:02d}"
 
+
 def transform_data(history, within_days):
     history['Pomodoros'] = history['Pomodoros'].astype(int)
     history['Work Hours'] = history['Work Hours'].round(2).apply(format_hours)
     history['Date'] = pd.to_datetime(history['Date'])
-    today =  datetime.today()
-    within = today - timedelta(days = within_days)
+    today = datetime.today()
+    within = today - timedelta(days=within_days)
     data = history[(history['Date'] >= within) & (history['Date'] <= today)]
     execute_command(data, within_days)
+
 
 def execute_command(data, within_days):
     if args.subcommand == 'table':
@@ -33,26 +36,31 @@ def execute_command(data, within_days):
     elif args.subcommand == 'plot':
         plot_graph(data, within_days)
 
+
 def confirm():
     answer = input('This will delete all your plumodoro history! \
             \nContinue? [y/n]')
-    if answer == 'y': 
+    if answer == 'y':
         clear_history()
-    elif answer == 'n': 
+    elif answer == 'n':
         print('')
     else:
-       print('confirm') 
+        print('confirm')
+
 
 def clear_history():
     print("clearing...")
-    history.create_history_file()
+    create_history_file()
+
 
 def print_table(table, within_days):
     print('Plumodoro table from within the last {} days:'.format(within_days))
-    print(table.to_string(index = False))
+    print(table.to_string(index=False))
+
 
 def plot_graph(table, within):
     extract_columns_into_lists(table, within)
+
 
 def extract_columns_into_lists(data, within):
     date = data['Date'].to_list()
@@ -62,46 +70,56 @@ def extract_columns_into_lists(data, within):
     work_hours = [round(x, 2) for x in work_hours]
     plot_bar(date, pomodoros, work_hours, within)
 
+
 def plot_bar(date, pomodoros, work_hours, within):
-    plt.simple_multiple_bar(date, [pomodoros, work_hours],
-        title = 'Plumodoro histogram \
+    plt.simple_multiple_bar(
+            date, [pomodoros, work_hours],
+            title='Plumodoro histogram \
 from within the last {} days'.format(within),
-        labels = ['pomodoros', 'work hours']
+            labels=['pomodoros', 'work hours']
     )
     plt.show()
 
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-            prog='Plumodoro-stats',  
+            prog='Plumodoro-stats',
             description='Display statistics from plumodoro',
             )
     # creating subcommands
     subparsers = parser.add_subparsers(
-            dest = 'subcommand', 
-            metavar = '<subcommand>')
+            dest='subcommand',
+            metavar='<subcommand>')
     # 1. table
-    parser_table = subparsers.add_parser('table', 
+    parser_table = subparsers.add_parser(
+            'table',
             help='Print a table with statistics')
-    parser_table.add_argument('-w', '--within', 
-            metavar = '\b',
-            type = int, default = 7, 
-            help = 'how many days within to print the table')
+    parser_table.add_argument(
+            '-w', '--within',
+            metavar='\b',
+            type=int, default=7,
+            help='how many days within to print the table'
+    )
     # 2.plot
-    parser_plot = subparsers.add_parser('plot', 
-            help='Plot a graph with statistics')
-    parser_plot.add_argument('-w', '--within', 
-            metavar = '\b',
-            type = int, default = 7, 
-            help = 'how many days within to plot the statistics')
+    parser_plot = subparsers.add_parser(
+            'plot',
+            help='Plot a graph with statistics'
+                )
+    parser_plot.add_argument(
+            '-w', '--within',
+            metavar='\b',
+            type=int, default=7,
+            help='how many days within to plot the statistics')
     # 3. clear history
-    parser_clear = subparsers.add_parser('clear', 
-            help = 'Clear history file')
+    parser_clear = subparsers.add_parser(
+            'clear',
+            help='Clear history file'
+                )
 
     args = parser.parse_args()
-   
     if args.subcommand == 'clear':
         confirm()
-    else: 
+    else:
         try:
             read_data(args.within)
         except AttributeError:
