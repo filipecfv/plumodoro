@@ -78,4 +78,4 @@ options:
 
 - Example `$ plumodoro-stats plot -w 6`
 
-![](/demo/plotext_plot.png)
+![](/demo/plumodoro_plot.png)
