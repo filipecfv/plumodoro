@@ -66,7 +66,7 @@ def long_break(work_time, short_rest, long_rest, pomo):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-            prog='Plumodoro',
+            prog='plumodoro',
             description='A simple command line pomodoro'
             )
 
