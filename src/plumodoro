@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 
+import argparse
 import clock
 import history
 import terminal
-import argparse
 
 from alarm import alarm
+from notification import notification
 
 
 def pomodoro(work_time, short_rest, long_rest):
@@ -43,13 +44,15 @@ def rest(work_time, short_rest, long_rest, pomo):
 def short_break(work_time, short_rest, long_rest, pomo):
     print("End of pomodoro", pomo)
     print("Time to rest")
+    notification('End of pomodoro: take a break!')
     alarm()
     clock.clock(short_rest)
     next_pomo(work_time, short_rest, long_rest, pomo)
 
 
 def next_pomo(work_time, short_rest, long_rest, pomo):
-    print("End of resting! \n")
+    print("End of rest! \n")
+    notification('End of rest: time to work!')
     alarm()
     pomo = pomo + 1
     work(work_time, short_rest, long_rest, pomo)
@@ -57,9 +60,10 @@ def next_pomo(work_time, short_rest, long_rest, pomo):
 
 def long_break(work_time, short_rest, long_rest, pomo):
     print("Long rest!")
+    notification('End of pomodoro: take a long break!')
     alarm()
     clock.clock(long_rest)
-    print("End of resting!")
+    print("End of rest!")
     alarm()
     terminal.clear()
 
