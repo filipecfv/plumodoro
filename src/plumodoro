@@ -15,7 +15,7 @@ def pomodoro(work_time, short_rest, long_rest):
         cycle(work_time, short_rest, long_rest)
     except (KeyboardInterrupt):
         terminal.clear()
-        print("Pomodoro interrompido!")
+        print("Plumodoro interrupted")
 
 
 def cycle(work_time, short_rest, long_rest):
